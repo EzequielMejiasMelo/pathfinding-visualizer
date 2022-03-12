@@ -17,18 +17,16 @@ class Board extends Component {
     for (let row = 0; row < 30; row++) {
       const currRow = [];
       for (let col = 0; col < 66; col++) {
+        const node = {row: row, column: col, rowCount: 30, columnCount: 66, type: 0, neighbors: [], distance: null, previous: null};
         if (row === 14 && col === 17) {
-          currRow.push(
-            <Node key={[row, col]} row={row} column={col} type={3} />
-          );
+          node.type = 3;
+          currRow.push(node);
         } else if (row === 14 && col === 47) {
-          currRow.push(
-            <Node key={[row, col]} row={row} column={col} type={4} />
-          );
+          node.type = 4;
+          currRow.push(node);
         } else {
-          currRow.push(
-            <Node key={[row, col]} row={row} column={col} type={0} />
-          );
+          node.type = 0;
+          currRow.push(node);
         }
       }
       grid.push(currRow);
@@ -43,7 +41,9 @@ class Board extends Component {
     return (
       <section className="grid-container">
         {grid.map((row) => {
-          return row.map((col) => col);
+          return row.map((node) => {
+            return <Node key={[node.row, node.column]} row={node.row} column={node.column} type={node.type} />
+          });
         })}
       </section>
     );
