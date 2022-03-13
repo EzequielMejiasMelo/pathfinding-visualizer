@@ -7,6 +7,7 @@
 
 // Most common sorting alorithm, does not know the location of the end node
 // Algorithm essentially swarms outwards from the start node
+// Further refinement: Implement min-heap or priority queue instead of constantly sorting
 // Returns all of the nodes we visited
 export function dijkstra(grid, startNode, endNode) {
     const visitedNodes = [];
