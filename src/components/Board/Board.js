@@ -29,7 +29,7 @@ class Board extends Component {
           columnCount: 66,
           type: 0,
           neighbors: [],
-          distance: null,
+          distance: Infinity,
           previous: null,
         };
         if (row === 14 && col === 17) {
