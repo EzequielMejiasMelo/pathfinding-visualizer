@@ -1,6 +1,14 @@
 import React from 'react';
 
+import { useVisualize } from '../../utils/VisualizeContext';
+
 const Nav = () => {
+    const {visualize, setVisualize} = useVisualize();
+
+    const runVisualizer = () => {
+        setVisualize();
+    }
+
     return (
         <nav className="nav">
             <li className="nav-item"><a className="nav-link active text-light" href='/'>Pathfinding Visualizer</a></li>
@@ -14,7 +22,7 @@ const Nav = () => {
                 </ul>
             </li>
             <a className="nav-link text-light" href='/'>Clear Board</a>
-            <button type="button" className="btn btn-success">Find Path</button>
+            <button type="button" className="btn btn-success" onClick={() => runVisualizer()}>Find Path</button>
         </nav>
     );
 };

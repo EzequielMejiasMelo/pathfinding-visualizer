@@ -1,8 +1,10 @@
 import React, { Component } from "react";
+import { VisualizeContext } from "../../utils/VisualizeContext";
 import { dijkstra, shortestPath } from "../../algo/dijkstra";
 import Node from "./Node";
 
 class Board extends Component {
+  static contextType = VisualizeContext;
   constructor(props) {
     super(props);
     this.state = {
@@ -101,16 +103,20 @@ class Board extends Component {
 
   visualizer() {
     const { grid } = this.state;
+    const { setVisualize } = this.context;
     const startNode = grid[this.start[0]][this.start[1]];
     const endNode = grid[this.end[0]][this.end[1]];
     const visitedNodes = dijkstra(grid, startNode, endNode);
     const shortestPathNodes = shortestPath(endNode);
     this.updatePaths(visitedNodes, shortestPathNodes);
+    setVisualize();
   }
 
   render() {
-    console.log(this.state.grid);
+    const { visualize } = this.context;
+    const {visualizer} = this;
     return (
+      <>
       <section className="grid-container">
         {this.state.grid.map((row) => {
           return row.map((node) => {
@@ -128,6 +134,8 @@ class Board extends Component {
           });
         })}
       </section>
+      {visualize ? visualizer() : null}
+      </>
     );
   }
 }
