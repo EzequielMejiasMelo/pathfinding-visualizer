@@ -78,3 +78,15 @@ function getNeighbors(node, grid){
 
     return neighbors;
 };
+
+export function shortestPath(endNode) {
+    const path = [];
+    let curr = endNode;
+
+    while (curr !== null) {
+        path.unshift(curr);
+        curr = curr.previous;
+    };
+
+    return path;
+};
