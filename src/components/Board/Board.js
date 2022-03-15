@@ -90,7 +90,7 @@ class Board extends Component {
   }
 
   updateShortest(shortestPath){
-    for (let i = 0; i < array.length; i++) {
+    for (let i = 0; i < shortestPath.length; i++) {
       setTimeout(() => {
         const node = shortestPath[i];
         document.getElementById(`[${node.row}, ${node.column}]`).className = 'path';
