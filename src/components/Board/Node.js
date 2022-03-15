@@ -12,11 +12,11 @@ class Node extends Component {
     super(props);
     this.row = props.row;
     this.column = props.column;
-    this.type = props.type;
+    this.state = {type: props.type};
   }
 
   getClass() {
-    switch (this.type) {
+    switch (this.state.type) {
       case 0:
         return "empty";
       case 1:
@@ -39,9 +39,18 @@ class Node extends Component {
       <div
         className={this.getClass()}
         id={[this.row, this.column]}
-        onMouseDown={() => this.props.MouseDown(this.row, this.column)}
-        onMouseEnter={() => this.props.MouseEnter(this.row, this.column)}
-        onMouseUp={() => this.props.MouseUp()}
+        onMouseDown={() => {
+            this.setState({type: this.props.type});
+            this.props.MouseDown(this.row, this.column);
+        }}
+        onMouseEnter={() => {
+            this.props.MouseEnter(this.row, this.column);
+            this.setState({type: this.props.type});
+        }}
+        onMouseUp={() => {
+            this.props.MouseUp();
+            this.setState({type: this.props.type});
+        }}
       ></div>
     );
   }

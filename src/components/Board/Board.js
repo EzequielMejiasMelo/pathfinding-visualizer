@@ -17,6 +17,7 @@ class Board extends Component {
   }
 
   initialBoard() {
+    console.log('Building board');
     let grid = [];
 
     for (let row = 0; row < 30; row++) {
@@ -73,6 +74,7 @@ class Board extends Component {
   }
 
   render() {
+    console.log(this.state.grid);
     return (
       <section className="grid-container">
         {this.state.grid.map((row) => {
