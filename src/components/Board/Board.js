@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { dijkstra, shortestPath } from "../../algo/dijkstra";
 import Node from "./Node";
 
 class Board extends Component {
@@ -53,7 +54,7 @@ class Board extends Component {
   updateGridToBlocker(grid, row, col) {
     const newGrid = grid.slice();
     const oldNode = newGrid[row][col];
-    const newNode = { ...oldNode, type: 2 };
+    const newNode = oldNode.type !== 2 ? { ...oldNode, type: 2 } : {...oldNode, type: 0};
     newGrid[row][col] = newNode;
     return newGrid;
   }
@@ -71,6 +72,40 @@ class Board extends Component {
 
   mouseUp = () => {
     this.setState({ mouseClick: false });
+  }
+
+  updatePaths(visited, shortestPath){
+    for (let i = 0; i <= visited.length; i++){
+      if (i === visited.length){
+        setTimeout(() => {
+          this.updateShortest(shortestPath);
+        }, 5 * i);
+        return;
+      }
+      setTimeout(() => {
+        const node = visited[i];
+        document.getElementById(`[${node.row}, ${node.column}]`).className = 'explored';
+      }, 5 * i);
+    }
+  }
+
+  updateShortest(shortestPath){
+    for (let i = 0; i < array.length; i++) {
+      setTimeout(() => {
+        const node = shortestPath[i];
+        document.getElementById(`[${node.row}, ${node.column}]`).className = 'path';
+      }, 50 * i);
+      
+    }
+  }
+
+  visualizer() {
+    const { grid } = this.state;
+    const startNode = grid[this.start[0]][this.start[1]];
+    const endNode = grid[this.end[0]][this.end[1]];
+    const visitedNodes = dijkstra(grid, startNode, endNode);
+    const shortestPathNodes = shortestPath(endNode);
+    this.updatePaths(visitedNodes, shortestPathNodes);
   }
 
   render() {
