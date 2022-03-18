@@ -7,6 +7,8 @@ class Board extends Component {
   static contextType = VisualizeContext;
   constructor(props) {
     super(props);
+    this.visualizer = this.visualizer.bind(this);
+    this.updatePaths = this.updatePaths.bind(this);
     this.state = {
       grid: [],
       start: [14, 17],
@@ -20,7 +22,6 @@ class Board extends Component {
   }
 
   initialBoard() {
-    console.log('Building board');
     let grid = [];
 
     for (let row = 0; row < 30; row++) {
@@ -86,7 +87,10 @@ class Board extends Component {
       }
       setTimeout(() => {
         const node = visited[i];
-        document.getElementById(`[${node.row}, ${node.column}]`).className = 'explored';
+        console.log(node.row);
+        console.log(node.column);
+        console.log(`${node.row}, ${node.column}`);
+        document.getElementById(`${node.row},${node.column}`).className = 'explored';
       }, 5 * i);
     }
   }
@@ -95,17 +99,15 @@ class Board extends Component {
     for (let i = 0; i < shortestPath.length; i++) {
       setTimeout(() => {
         const node = shortestPath[i];
-        document.getElementById(`[${node.row}, ${node.column}]`).className = 'path';
+        document.getElementById(`${node.row},${node.column}`).className = 'path';
       }, 50 * i);
       
     }
   }
 
-  visualizer() {
-    const { grid } = this.state;
-    const { setVisualize } = this.context;
-    const startNode = grid[this.start[0]][this.start[1]];
-    const endNode = grid[this.end[0]][this.end[1]];
+  visualizer(grid, setVisualize, start, end) {
+    const startNode = grid[start[0]][start[1]];
+    const endNode = grid[end[0]][end[1]];
     const visitedNodes = dijkstra(grid, startNode, endNode);
     const shortestPathNodes = shortestPath(endNode);
     this.updatePaths(visitedNodes, shortestPathNodes);
@@ -113,7 +115,9 @@ class Board extends Component {
   }
 
   render() {
-    const { visualize } = this.context;
+    const {grid, start, end} = this.state;
+    const { visualize, setVisualize } = this.context;
+    console.log(visualize);
     const {visualizer} = this;
     return (
       <>
@@ -134,7 +138,7 @@ class Board extends Component {
           });
         })}
       </section>
-      {visualize ? visualizer() : null}
+      {visualize ? visualizer(grid, setVisualize, start, end) : null}
       </>
     );
   }

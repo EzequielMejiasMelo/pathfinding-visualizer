@@ -4,7 +4,7 @@ import { useVisualize } from '../../utils/VisualizeContext';
 
 const Nav = () => {
     const {visualize, setVisualize} = useVisualize();
-
+    
     const runVisualizer = () => {
         setVisualize();
     }

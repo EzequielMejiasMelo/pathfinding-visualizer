@@ -61,19 +61,19 @@ function getNeighbors(node, grid){
 
     //Node below
     if (node.row < node.rowCount - 1 && grid[node.row+1][node.column].type !== 2){
-        neighbors.append(grid[node.row+1][node.column]);
+        neighbors.push(grid[node.row+1][node.column]);
     }
     //Node above
     if (node.row > 0 && grid[node.row-1][node.column].type !== 2){
-        neighbors.append(grid[node.row-1][node.column]);
+        neighbors.push(grid[node.row-1][node.column]);
     }
     //Node to the right
     if (node.column < node.columnCount - 1 && grid[node.row][node.column+1].type !== 2) {
-        neighbors.append(grid[node.row][node.column+1]);
+        neighbors.push(grid[node.row][node.column+1]);
     }
     //Node to the left
     if (node.column > 0 && grid[node.row][node.column-1].type !== 2){
-        neighbors.append(grid[node.row][node.column-1]);
+        neighbors.push(grid[node.row][node.column-1]);
     }
 
     return neighbors;
