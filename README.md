@@ -16,6 +16,7 @@ A visualizer for pathfinding algorithms, making it easier to understand how the 
 
 - HTML
 - CSS
+- JavaScript
 - React
 
 ## Preview
