@@ -63,11 +63,15 @@ class Board extends Component {
   }
 
   mouseDown = (row, col) => {
+    const { visualize, visualized } = this.context;
+    if (visualize) return;
+    if (visualized) {/* Check if node is start node and move it */};
     const newGrid = this.updateGridToBlocker(this.state.grid, row, col);
     this.setState({ grid: newGrid, mouseClick: true });
   }
 
   mouseEnter = (row, col) => {
+    /* Check if node is start node and move it */
     if (!this.state.mouseClick) return;
     const newGrid = this.updateGridToBlocker(this.state.grid, row, col);
     this.setState({ grid: newGrid });
