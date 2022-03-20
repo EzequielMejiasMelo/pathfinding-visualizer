@@ -64,6 +64,7 @@ class Board extends Component {
 
   mouseDown = (row, col) => {
     const { visualize, visualized } = this.context;
+    console.log(visualize);
     if (visualize) return;
     if (visualized) {/* Check if node is start node and move it */};
     const newGrid = this.updateGridToBlocker(this.state.grid, row, col);
@@ -91,10 +92,13 @@ class Board extends Component {
       }
       setTimeout(() => {
         const node = visited[i];
-        console.log(node.row);
-        console.log(node.column);
-        console.log(`${node.row}, ${node.column}`);
-        document.getElementById(`${node.row},${node.column}`).className = 'explored';
+        if (node.row === 14 && node.column === 17) {
+          document.getElementById(`${node.row},${node.column}`).className = 'start-explored';
+        } else if (node.row === 14 && node.column === 47) {
+          document.getElementById(`${node.row},${node.column}`).className = 'end-explored';
+        } else {
+          document.getElementById(`${node.row},${node.column}`).className = 'explored';
+        };
       }, 5 * i);
     }
   }
@@ -103,25 +107,30 @@ class Board extends Component {
     for (let i = 0; i < shortestPath.length; i++) {
       setTimeout(() => {
         const node = shortestPath[i];
-        document.getElementById(`${node.row},${node.column}`).className = 'path';
+        if (node.row === 14 && node.column === 17) {
+          document.getElementById(`${node.row},${node.column}`).className = 'start-path';
+        } else if (node.row === 14 && node.column === 47) {
+          document.getElementById(`${node.row},${node.column}`).className = 'end-path';
+        } else {
+          document.getElementById(`${node.row},${node.column}`).className = 'path';
+        };
       }, 50 * i);
       
     }
   }
 
   visualizer(grid, setVisualize, start, end) {
+    setVisualize();
     const startNode = grid[start[0]][start[1]];
     const endNode = grid[end[0]][end[1]];
     const visitedNodes = dijkstra(grid, startNode, endNode);
     const shortestPathNodes = shortestPath(endNode);
     this.updatePaths(visitedNodes, shortestPathNodes);
-    setVisualize();
   }
 
   render() {
     const {grid, start, end} = this.state;
     const { visualize, setVisualize } = this.context;
-    console.log(visualize);
     const {visualizer} = this;
     return (
       <>
