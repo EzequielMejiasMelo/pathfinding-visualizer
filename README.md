@@ -7,6 +7,7 @@
   - [Overview](#overview)
   - [Technologies](#technologies)
   - [Preview](#preview)
+  - [Future Additions](#future-additions)
   - [Contact Me](#contact-me)
 
 ## Overview
@@ -29,6 +30,15 @@ A visualizer for pathfinding algorithms, making it easier to understand how the 
 ![Visualizer found the path to the end node with blockers in the middle.](images/pathfinder-2.JPG)
 
 ![Visualizer could not find a path to the end node because it was completed blocked off.](images/pathfinder-3.JPG)
+
+## Future Additions
+
+Below are some of the things I plan to have implemented soon.
+
+- Movable Start and End nodes
+- More algorithms
+- Style Revamp
+- Possible Graph View
 
 ## Contact Me
 
