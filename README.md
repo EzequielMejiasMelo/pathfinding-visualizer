@@ -1,5 +1,5 @@
 # Pathfinding Visualizer
-[Link to the deployed application]()
+[Link to the deployed application](https://ezequielmejiasmelo.github.io/pathfinding-visualizer/)
 
 ## Table of Contents
 - [Pathfinding Visualizer](#pathfinding-visualizer)
