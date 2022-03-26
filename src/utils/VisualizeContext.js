@@ -8,7 +8,12 @@ class BoardProvider extends Component {
     state = {
         visualize: false,
         visualized: false,
-        algorithm: ''
+        algorithm: '',
+        clearBoard: false
+    };
+
+    setClearBoard = () => {
+        this.setState({clearBoard: !this.state.clearBoard});
     };
 
     setVisualize = () => {
@@ -25,11 +30,11 @@ class BoardProvider extends Component {
 
     render() {
         const { children } =this.props;
-        const { visualize, algorithm } = this.state;
-        const { setVisualize, setVisualized, setAlgorithm } = this;
+        const { visualize, algorithm, clearBoard, visualized } = this.state;
+        const { setVisualize, setVisualized, setAlgorithm, setClearBoard } = this;
 
         return (
-            <VisualizeContext.Provider value={{visualize, setVisualize, setVisualized, setAlgorithm, algorithm }}>
+            <VisualizeContext.Provider value={{visualize, algorithm, clearBoard, visualized, setVisualize, setVisualized, setAlgorithm, setClearBoard}}>
                 {children}
             </VisualizeContext.Provider>
         );

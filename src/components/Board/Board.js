@@ -9,6 +9,7 @@ class Board extends Component {
     super(props);
     this.visualizer = this.visualizer.bind(this);
     this.updatePaths = this.updatePaths.bind(this);
+    this.initialBoard = this.initialBoard.bind(this);
     this.state = {
       grid: [],
       start: [14, 17],
@@ -64,9 +65,11 @@ class Board extends Component {
 
   mouseDown = (row, col) => {
     const { visualize, visualized } = this.context;
-    console.log(visualize);
-    if (visualize) return;
-    if (visualized) {/* Check if node is start node and move it */};
+    if (visualize || visualized) return;
+    if (this.state.grid[row][col].type === 2) {
+      /* Check if node is start node and move it */
+
+    }
     const newGrid = this.updateGridToBlocker(this.state.grid, row, col);
     this.setState({ grid: newGrid, mouseClick: true });
   }
@@ -130,8 +133,14 @@ class Board extends Component {
 
   render() {
     const {grid, start, end} = this.state;
-    const { visualize, setVisualize } = this.context;
-    const {visualizer} = this;
+    const { visualize, algorithm, setVisualize, clearBoard, setClearBoard } = this.context;
+    const {visualizer, initialBoard} = this;
+
+    if(clearBoard){
+      console.log('Running init board');
+      setClearBoard();
+      initialBoard();
+    };
     return (
       <>
       <section className="grid-container">
@@ -151,7 +160,7 @@ class Board extends Component {
           });
         })}
       </section>
-      {visualize ? visualizer(grid, setVisualize, start, end) : null}
+      {visualize && algorithm === 'dijkstra' ? visualizer(grid, setVisualize, start, end) : null}
       </>
     );
   }

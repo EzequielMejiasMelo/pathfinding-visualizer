@@ -4,7 +4,6 @@ import { useVisualize } from '../../utils/VisualizeContext';
 
 const Legend = () => {
     const { algorithm } = useVisualize();
-    console.log(algorithm);
 
     return (
         <section className="fs-4">
