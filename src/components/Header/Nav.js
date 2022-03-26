@@ -19,13 +19,13 @@ const Nav = () => {
             <li>
                 <a className="nav-link dropdown-toggle text-light" data-bs-toggle="dropdown" role="button" href='/'>Algorithms</a>
                 <ul className="dropdown-menu">
-                    <li><a className="dropdown-item" href='/' onClick={() => changeAlgorithm('dijkstra')}>Dijkstra's Algorithm</a></li>
-                    <li><a className="dropdown-item" href='/' onClick={() => changeAlgorithm('aStar')}>A* Search</a></li>
-                    <li><a className="dropdown-item" href='/' onClick={() => changeAlgorithm('breadthFirst')}>Breadth-first Search</a></li>
-                    <li><a className="dropdown-item" href='/' onClick={() => changeAlgorithm('depthFirst')}>Depth-first Search</a></li>
+                    <li><button className="dropdown-item" onClick={() => changeAlgorithm('dijkstra')}>Dijkstra's Algorithm</button></li>
+                    <li><button className="dropdown-item" onClick={() => changeAlgorithm('aStar')}>A* Search</button></li>
+                    <li><button className="dropdown-item" onClick={() => changeAlgorithm('breadthFirst')}>Breadth-first Search</button></li>
+                    <li><button className="dropdown-item" onClick={() => changeAlgorithm('depthFirst')}>Depth-first Search</button></li>
                 </ul>
             </li>
-            <a className="nav-link text-light" href='/'>Clear Board</a>
+            <button className=" btn nav-link text-light">Clear Board</button>
             <button type="button" className="btn btn-success" onClick={() => runVisualizer()}>Find Path</button>
         </nav>
     );

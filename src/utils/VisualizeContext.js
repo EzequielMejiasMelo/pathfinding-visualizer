@@ -25,11 +25,11 @@ class BoardProvider extends Component {
 
     render() {
         const { children } =this.props;
-        const { visualize } = this.state;
+        const { visualize, algorithm } = this.state;
         const { setVisualize, setVisualized, setAlgorithm } = this;
 
         return (
-            <VisualizeContext.Provider value={{visualize, setVisualize, setVisualized, setAlgorithm }}>
+            <VisualizeContext.Provider value={{visualize, setVisualize, setVisualized, setAlgorithm, algorithm }}>
                 {children}
             </VisualizeContext.Provider>
         );
