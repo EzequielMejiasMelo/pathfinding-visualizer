@@ -21,7 +21,7 @@ const Nav = () => {
 
     return (
         <nav className="nav">
-            <li className="nav-item"><a className="nav-link active text-light" href='/'>Pathfinding Visualizer</a></li>
+            <li className="nav-item"><a className="nav-link active text-light" href='/pathfinding-visualizer'>Fish-finding Visualizer</a></li>
             <li>
                 <a className="nav-link dropdown-toggle text-light" data-bs-toggle="dropdown" role="button" href='/'>Algorithms</a>
                 <ul className="dropdown-menu">
