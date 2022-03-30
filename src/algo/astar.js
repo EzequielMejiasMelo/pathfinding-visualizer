@@ -10,23 +10,42 @@
 // Returns all of the nodes we visited
 export function aStar(grid, startNode, endNode) {
     const visitedNodes = [];
-    
+    const unvisitedNodes = [];
+
     startNode.distance = 0;
     startNode.fScore = manhattan(startNode, endNode);
-    let unvisitedNodes = [startNode];
-    while (!!unvisitedNodes.length) {
+    unvisitedNodes.push(startNode);
+
+    while (!!unvisitedNodes.length){
         sortNodes(unvisitedNodes);
+
         const closest = unvisitedNodes.shift();
 
-        if (closest.type === 2) continue;
-
-        if (closest.distance === Infinity) return visitedNodes;
-
-        closest.type = 1;
         visitedNodes.push(closest);
+        console.log(closest === endNode);
         if (closest === endNode) return visitedNodes;
-        const neighbors = updateNeighborsDistance(closest, grid, endNode);
-        unvisitedNodes = unvisitedNodes.concat(neighbors);
+        closest.type = 1;
+        
+        const neighbors = getNeighbors(closest, grid).filter(neighbor => neighbor.type !== 2);
+        
+        for (const neighbor of neighbors){
+            const gScore = closest.distance + 1;
+            const checkVisited = neighbor.type === 1;
+
+            if (!checkVisited || gScore < neighbor.distance){
+                neighbor.type = 1;
+                neighbor.previous = closest;
+                neighbor.distance = gScore;
+                neighbor.fScore = neighbor.distance + manhattan(neighbor, endNode);
+
+                if(!checkVisited){
+                    unvisitedNodes.push(neighbor);
+                } else {
+                    sortNodes(unvisitedNodes);
+                }
+            }
+        }
+
     }
 };
 
@@ -38,20 +57,6 @@ function manhattan(node1, node2){
 //Sorts nodesn by their f-score
 function sortNodes(nodes) {
     nodes.sort((a, b) => a.fScore - b.fScore);
-};
-
-//Updates the distance for each neighbor and sets previous so we can backtrack when looking for the solved path
-function updateNeighborsDistance(node, grid, endNode) {
-    const neighbors = getNeighbors(node, grid).filter(neighbor => neighbor.type !== 1);
-
-    for (const neighbor of neighbors) {
-        neighbor.distance = node.distance + 1;
-        const fScore = manhattan(neighbor, endNode);
-        neighbor.fScore = neighbor.distance + fScore;
-        neighbor.previous = node;
-    };
-
-    return neighbors;
 };
 
 // Excludes diagonals

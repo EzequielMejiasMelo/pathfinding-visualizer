@@ -9,6 +9,7 @@ class Board extends Component {
   constructor(props) {
     super(props);
     this.visualizer = this.visualizer.bind(this);
+    this.visualizeAStar = this.visualizeAStar.bind(this);
     this.updatePaths = this.updatePaths.bind(this);
     this.initialBoard = this.initialBoard.bind(this);
     this.state = {
@@ -144,26 +145,31 @@ class Board extends Component {
     }
   }
 
-  visualizer(grid, setVisualize, start, end, algorithm) {
+  visualizer(grid, setVisualize, start, end) {
     setVisualize();
     const startNode = grid[start[0]][start[1]];
     const endNode = grid[end[0]][end[1]];
-    let visitedNodes;
-    if (algorithm === 'dijkstra'){
-      visitedNodes = dijkstra(grid, startNode, endNode);
-    } else if (algorithm === 'aStar'){
-      visitedNodes = aStar(grid, startNode, endNode);
-    };
-    console.log(visitedNodes);
-    const shortestPathNodes = shortestPath(endNode);
+    const visitedNodes = dijkstra(grid, startNode, endNode);
     this.setState({visited: visitedNodes});
+    const shortestPathNodes = shortestPath(endNode);
+    this.updatePaths(visitedNodes, shortestPathNodes);
+  }
+
+  visualizeAStar(grid, setVisualize, start, end) {
+    setVisualize();
+    const startNode = grid[start[0]][start[1]];
+    const endNode = grid[end[0]][end[1]];
+    const visitedNodes = aStar(grid, startNode, endNode);
+    this.setState({visited: visitedNodes});
+    const shortestPathNodes = shortestPath(endNode);
     this.updatePaths(visitedNodes, shortestPathNodes);
   }
 
   render() {
+    console.log('rendering');
     const {grid, start, end, visited} = this.state;
     const { visualize, algorithm, setVisualize, clearBoard, setClearBoard } = this.context;
-    const {visualizer, initialBoard, removeVisitedClasses} = this;
+    const {visualizer, visualizeAStar, initialBoard, removeVisitedClasses} = this;
 
     if(clearBoard){
       console.log('Clearing Board');
@@ -190,7 +196,7 @@ class Board extends Component {
           });
         })}
       </section>
-      {visualize && algorithm !== '' ? visualizer(grid, setVisualize, start, end, algorithm) : null}
+      {visualize && algorithm === 'dijkstra' ? visualizer(grid, setVisualize, start, end) : visualize && algorithm === 'aStar' ? visualizeAStar(grid, setVisualize, start, end) : null}
       </>
     );
   }
