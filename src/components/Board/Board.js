@@ -15,6 +15,7 @@ class Board extends Component {
       start: [14, 17],
       end: [14, 47],
       mouseClick: false,
+      visited: [],
     };
   }
 
@@ -55,6 +56,30 @@ class Board extends Component {
     this.setState({ grid });
   }
 
+  removeVisitedClasses(visited) {
+    for (let i=0; i < visited.length; i++){
+      const node = visited[i];
+      if (node.row === 14 && node.column === 17) {
+        document.getElementById(`${node.row},${node.column}`).className = 'start';
+      } else if (node.row === 14 && node.column === 47) {
+        document.getElementById(`${node.row},${node.column}`).className = 'end';
+      } else {
+        document.getElementById(`${node.row},${node.column}`).className = 'empty';
+      };
+    }
+
+    const blockers = document.querySelectorAll('.blocker');
+    console.log(blockers);
+    for (const block of blockers){
+      if (block.nodeName === 'SPAN') continue;
+      block.className = 'empty';
+    }
+
+    return;
+  }
+
+  
+
   updateGridToBlocker(grid, row, col) {
     const newGrid = grid.slice();
     const oldNode = newGrid[row][col];
@@ -66,10 +91,8 @@ class Board extends Component {
   mouseDown = (row, col) => {
     const { visualize, visualized } = this.context;
     if (visualize || visualized) return;
-    if (this.state.grid[row][col].type === 2) {
-      /* Check if node is start node and move it */
-
-    }
+    if (this.state.grid[row][col].type === 3) return;
+    if (this.state.grid[row][col].type === 4) return;
     const newGrid = this.updateGridToBlocker(this.state.grid, row, col);
     this.setState({ grid: newGrid, mouseClick: true });
   }
@@ -128,18 +151,20 @@ class Board extends Component {
     const endNode = grid[end[0]][end[1]];
     const visitedNodes = dijkstra(grid, startNode, endNode);
     const shortestPathNodes = shortestPath(endNode);
+    this.setState({visited: visitedNodes});
     this.updatePaths(visitedNodes, shortestPathNodes);
   }
 
   render() {
-    const {grid, start, end} = this.state;
+    const {grid, start, end, visited} = this.state;
     const { visualize, algorithm, setVisualize, clearBoard, setClearBoard } = this.context;
-    const {visualizer, initialBoard} = this;
+    const {visualizer, initialBoard, removeVisitedClasses} = this;
 
     if(clearBoard){
-      console.log('Running init board');
+      console.log('Clearing Board');
       setClearBoard();
       initialBoard();
+      removeVisitedClasses(visited);
     };
     return (
       <>

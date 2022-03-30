@@ -29,7 +29,7 @@ class BoardProvider extends Component {
     };
 
     render() {
-        const { children } =this.props;
+        const { children } = this.props;
         const { visualize, algorithm, clearBoard, visualized } = this.state;
         const { setVisualize, setVisualized, setAlgorithm, setClearBoard } = this;
 
