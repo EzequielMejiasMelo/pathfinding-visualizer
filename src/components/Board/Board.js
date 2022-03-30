@@ -152,8 +152,9 @@ class Board extends Component {
     if (algorithm === 'dijkstra'){
       visitedNodes = dijkstra(grid, startNode, endNode);
     } else if (algorithm === 'aStar'){
-      visitedNodes = aStar(grid, startNode, endNode)
+      visitedNodes = aStar(grid, startNode, endNode);
     };
+    console.log(visitedNodes);
     const shortestPathNodes = shortestPath(endNode);
     this.setState({visited: visitedNodes});
     this.updatePaths(visitedNodes, shortestPathNodes);

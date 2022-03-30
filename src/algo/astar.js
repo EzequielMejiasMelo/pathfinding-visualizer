@@ -10,10 +10,10 @@
 // Returns all of the nodes we visited
 export function aStar(grid, startNode, endNode) {
     const visitedNodes = [];
-
+    
     startNode.distance = 0;
-    startNode.fScore = 0;
-    const unvisitedNodes = [startNode];
+    startNode.fScore = manhattan(startNode, endNode);
+    let unvisitedNodes = [startNode];
     while (!!unvisitedNodes.length) {
         sortNodes(unvisitedNodes);
         const closest = unvisitedNodes.shift();
@@ -26,15 +26,13 @@ export function aStar(grid, startNode, endNode) {
         visitedNodes.push(closest);
         if (closest === endNode) return visitedNodes;
         const neighbors = updateNeighborsDistance(closest, grid, endNode);
-        unvisitedNodes.concat(neighbors);
+        unvisitedNodes = unvisitedNodes.concat(neighbors);
     }
 };
 
-
-
 // Calculate Manhattan distance
 function manhattan(node1, node2){
-    return Math.abs(node1[0] - node2[0]) + Math.abs(node1[1] - node2[1]);
+    return Math.abs(node1.row - node2.row) + Math.abs(node1.column - node2.column);
 };
 
 //Sorts nodesn by their f-score
@@ -48,7 +46,8 @@ function updateNeighborsDistance(node, grid, endNode) {
 
     for (const neighbor of neighbors) {
         neighbor.distance = node.distance + 1;
-        neighbor.fScore = neighbor.distance + manhattan(neighbor, endNode);
+        const fScore = manhattan(neighbor, endNode);
+        neighbor.fScore = neighbor.distance + fScore;
         neighbor.previous = node;
     };
 
