@@ -27,9 +27,9 @@ const Nav = () => {
                 <a className="nav-link dropdown-toggle text-light" data-bs-toggle="dropdown" role="button" href='/'>Algorithms</a>
                 <ul className="dropdown-menu">
                     <li><button className="dropdown-item" onClick={() => changeAlgorithm('dijkstra')}>Dijkstra's Algorithm</button></li>
-                    <li><button className="dropdown-item" onClick={() => changeAlgorithm('aStar')}>A* Search (In development)</button></li>
-                    <li><button className="dropdown-item" onClick={() => changeAlgorithm('breadthFirst')}>Breadth-first Search (In development)</button></li>
-                    <li><button className="dropdown-item" onClick={() => changeAlgorithm('depthFirst')}>Depth-first Search (In development)</button></li>
+                    <li><button className="dropdown-item" onClick={() => changeAlgorithm('aStar')}>A*Search Algorithm</button></li>
+                    <li><button className="dropdown-item" onClick={() => changeAlgorithm('')}>Breadth-first Search (In development)</button></li>
+                    <li><button className="dropdown-item" onClick={() => changeAlgorithm('')}>Depth-first Search (In development)</button></li>
                 </ul>
             </li>
             <button className=" btn nav-link text-light" onClick={() => clearBoard()}>Clear Board</button>

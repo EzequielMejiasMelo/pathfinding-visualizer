@@ -1,41 +1,58 @@
+// 0 - unvisited node
+// 1 - visited node
+// 2 - blocker node
+// 3 - start node
+// 4 - end node
+// 5 - shortest path node
+
+// Sorting algorithm knows the location of the end node
+// Further refinement: Implement min-heap or priority queue instead of constantly sorting
+// Returns all of the nodes we visited
 export function aStar(grid, startNode, endNode) {
     const visitedNodes = [];
 
-    const unvisitedNodes = getNodes(grid);
+    startNode.distance = 0;
+    startNode.fScore = 0;
+    const unvisitedNodes = [startNode];
     while (!!unvisitedNodes.length) {
         sortNodes(unvisitedNodes);
         const closest = unvisitedNodes.shift();
 
         if (closest.type === 2) continue;
+
+        if (closest.distance === Infinity) return visitedNodes;
+
+        closest.type = 1;
+        visitedNodes.push(closest);
+        if (closest === endNode) return visitedNodes;
+        const neighbors = updateNeighborsDistance(closest, grid, endNode);
+        unvisitedNodes.concat(neighbors);
     }
 };
 
+
+
 // Calculate Manhattan distance
-function heuristic(node1, node2){
+function manhattan(node1, node2){
     return Math.abs(node1[0] - node2[0]) + Math.abs(node1[1] - node2[1]);
 };
 
-function getNodes(grid) {
-    const nodes = [];
-    for (const row of grid) {
-        for (const node of row){
-            nodes.push(node);
-        };
-    };
-    return nodes;
-};
-
+//Sorts nodesn by their f-score
 function sortNodes(nodes) {
-    nodes.sort((a, b) => a.distance - b.distance);
+    nodes.sort((a, b) => a.fScore - b.fScore);
 };
 
-function updateNeighborsDistance(node, grid) {
+//Updates the distance for each neighbor and sets previous so we can backtrack when looking for the solved path
+function updateNeighborsDistance(node, grid, endNode) {
     const neighbors = getNeighbors(node, grid).filter(neighbor => neighbor.type !== 1);
 
     for (const neighbor of neighbors) {
         neighbor.distance = node.distance + 1;
+        neighbor.fScore = neighbor.distance + manhattan(neighbor, endNode);
         neighbor.previous = node;
     };
+
+    return neighbors;
 };
 
 // Excludes diagonals

@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { VisualizeContext } from "../../utils/VisualizeContext";
 import { dijkstra, shortestPath } from "../../algo/dijkstra";
+import { aStar } from "../../algo/astar";
 import Node from "./Node";
 
 class Board extends Component {
@@ -78,8 +79,6 @@ class Board extends Component {
     return;
   }
 
-  
-
   updateGridToBlocker(grid, row, col) {
     const newGrid = grid.slice();
     const oldNode = newGrid[row][col];
@@ -145,11 +144,16 @@ class Board extends Component {
     }
   }
 
-  visualizer(grid, setVisualize, start, end) {
+  visualizer(grid, setVisualize, start, end, algorithm) {
     setVisualize();
     const startNode = grid[start[0]][start[1]];
     const endNode = grid[end[0]][end[1]];
-    const visitedNodes = dijkstra(grid, startNode, endNode);
+    let visitedNodes;
+    if (algorithm === 'dijkstra'){
+      visitedNodes = dijkstra(grid, startNode, endNode);
+    } else if (algorithm === 'aStar'){
+      visitedNodes = aStar(grid, startNode, endNode)
+    };
     const shortestPathNodes = shortestPath(endNode);
     this.setState({visited: visitedNodes});
     this.updatePaths(visitedNodes, shortestPathNodes);
@@ -185,7 +189,7 @@ class Board extends Component {
           });
         })}
       </section>
-      {visualize && algorithm === 'dijkstra' ? visualizer(grid, setVisualize, start, end) : null}
+      {visualize && algorithm !== '' ? visualizer(grid, setVisualize, start, end, algorithm) : null}
       </>
     );
   }
