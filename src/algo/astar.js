@@ -22,7 +22,6 @@ export function aStar(grid, startNode, endNode) {
         const closest = unvisitedNodes.shift();
 
         visitedNodes.push(closest);
-        console.log(closest === endNode);
         if (closest === endNode) return visitedNodes;
         closest.type = 1;
         

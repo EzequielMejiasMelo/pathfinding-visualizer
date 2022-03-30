@@ -71,7 +71,6 @@ class Board extends Component {
     }
 
     const blockers = document.querySelectorAll('.blocker');
-    console.log(blockers);
     for (const block of blockers){
       if (block.nodeName === 'SPAN') continue;
       block.className = 'empty';
@@ -166,13 +165,11 @@ class Board extends Component {
   }
 
   render() {
-    console.log('rendering');
     const {grid, start, end, visited} = this.state;
     const { visualize, algorithm, setVisualize, clearBoard, setClearBoard } = this.context;
     const {visualizer, visualizeAStar, initialBoard, removeVisitedClasses} = this;
 
     if(clearBoard){
-      console.log('Clearing Board');
       setClearBoard();
       initialBoard();
       removeVisitedClasses(visited);

@@ -16,7 +16,6 @@ const Nav = () => {
     };
 
     const clearBoard = () => {
-        console.log('Clearing Board');
         setClearBoard();
     };
 
